@@ -1,27 +1,31 @@
 package Functional;
 
-import org.jetbrains.annotations.Contract;
-
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class Functional {
 
     public static void main(String[] args) {
-        int incremente = incrementByOne(7);
-        System.out.println(incremente);
+        // Function takes 1 argument and produces 1 result
+        int somaUm = incrementByOne(7);
+        System.out.println("somaUm: " + somaUm);
 
-        int incremente2 = incrementByOneFunction.apply(incremente);
-        System.out.println(incremente2);
+        int soma2 = incrementByOneFunction.apply(incrementByOne(7));
+        System.out.println("SomaUmComProgramacaoFuncional: " + soma2);
 
-        int numSum = incrementByOne(incremente2);
+        int numSum = incrementByOne(soma2);
         System.out.println(numSum);
 
         int addAndMultiply = addBy1AndThenMultiplyBy10.apply(numSum);
         System.out.println(addAndMultiply);
 
+        //BiFunction
         System.out.println(
-                incrementByOneAndMultiplyBiFunction.apply(4,100)
+                incrementByOneAndMultiplyBiFunction.apply(4, 100)
+        );
+
+        System.out.println(
+                incrementByOneAndMultiply(4, 100)
         );
     }
 
@@ -32,8 +36,11 @@ public class Functional {
             (numberToIncrementByOne, numberToMultiplyBy) ->
                     (numberToIncrementByOne + 1) * numberToMultiplyBy;
 
-    @Contract(pure = true)
     static int incrementByOne(int number) {
         return number + 1;
+    }
+
+    static int incrementByOneAndMultiply(int number, int numToMultiplyBy) {
+        return (number + 1) * numToMultiplyBy;
     }
 }

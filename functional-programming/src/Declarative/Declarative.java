@@ -1,36 +1,37 @@
-package Imperative;
+package Declarative;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class Imperative {
+import static Declarative.Declarative.Gender.FEMALE;
+
+public class Declarative {
     public static void main(String[] args) {
 
         List<Person> people = List.of(
                 new Person("Vinícius", Gender.MALE),
-                new Person("Gabriela", Gender.FEMALE),
+                new Person("Gabriela", FEMALE),
                 new Person("Arthur", Gender.MALE),
-                new Person("Silvana", Gender.FEMALE),
+                new Person("Silvana", FEMALE),
                 new Person("Siloede", Gender.MALE)
         );
 
-        List<Person> females = new ArrayList<>();
-        List<Person> males = new ArrayList<>();
+        people.stream()
+                .filter(person -> FEMALE.equals(person.gender)).forEach(System.out::println);
 
-        // Imperative approach
-        for (Person person : people) {
-            if (Gender.MALE.equals(person.gender)) {
-                males.add(person);
-            }
-        }
-
-        for (Person person : people) {
-            if (Gender.FEMALE.equals(person.gender)) {
-                females.add(person);
-            }
-        }
+        List<Person> females = people.stream()
+                .filter(person -> FEMALE.equals(person.gender))
+                .toList();
 
         females.forEach(System.out::println);
+
+        people.stream()
+                .filter(person -> Gender.MALE.equals(person.gender))
+                .forEach(System.out::println);
+
+        List<Person> males = people.stream()
+                .filter(person -> Gender.MALE.equals(person.gender))
+                .toList();
+
         males.forEach(System.out::println);
     }
 
@@ -41,6 +42,7 @@ public class Imperative {
         Person(String name, Gender gender) {
             this.name = name;
             this.gender = gender;
+
         }
 
         @Override
